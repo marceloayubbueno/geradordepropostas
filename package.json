@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
+    "@react-pdf/renderer": "^4.3.1",
     "aos": "^2.3.4",
     "clsx": "^2.0.0",
     "framer-motion": "^12.22.0",
@@ -27,6 +28,7 @@
     "@types/node": "^20.19.4",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
+    "@types/react-pdf": "^7.0.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.3.4",

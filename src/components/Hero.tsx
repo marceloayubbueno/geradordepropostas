@@ -16,10 +16,10 @@ const Hero = () => {
   const pathname = usePathname()
 
   const stats = [
-    { number: '150+', label: 'Projetos desenvolvidos', icon: Code },
-    { number: '3M+', label: 'Linhas de código escritas', icon: Terminal },
-    { number: '98%', label: 'Performance média', icon: Cpu },
-    { number: '50+', label: 'Clientes satisfeitos', icon: Database }
+    { number: '10+', label: 'Projetos entregues', icon: Code },
+    { number: '95+', label: 'Performance Score', icon: Cpu },
+    { number: '50+', label: 'Integrações criadas', icon: Terminal },
+    { number: '3+', label: 'Anos de experiência', icon: Database }
   ]
 
   return (
@@ -107,7 +107,7 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <Zap className="w-4 h-4 mr-2" />
-              Desenvolvimento Web e Automações
+              Front-end Developer | React & Next.js Specialist
             </motion.div>
 
             {/* Main Headline */}
@@ -117,11 +117,11 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              DESENVOLVIMENTO{' '}
+              DESENVOLVEDOR{' '}
               <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                WEB E AUTOMAÇÕES
+                FRONT-END
               </span>{' '}
-              PARA SEU NEGÓCIO
+              QUE ENTENDE DE GROWTH
             </motion.h1>
 
             {/* Subheadline */}
@@ -131,25 +131,40 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              Sites profissionais, sistemas web, automações inteligentes e soluções digitais que impulsionam seu negócio.
+              Criando interfaces modernas e otimizadas com React, Next.js e TypeScript. 
+              Foco em performance, integrações e resultados mensuráveis.
             </motion.p>
 
-            {/* CTA Button */}
+            {/* CTA Buttons */}
             <motion.div
+              className="flex flex-wrap gap-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
               <motion.button
                 onClick={() => {
-                  window.open('https://www.uixweb.com.br/chat', '_blank');
+                  const portfolio = document.getElementById('portfolio');
+                  if (portfolio) portfolio.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
                 className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-2xl hover:shadow-green-500/25 transition-all duration-300 group"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Falar com Especialista
+                Ver Projetos
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform inline" />
+              </motion.button>
+              
+              <motion.button
+                onClick={() => {
+                  window.open('https://www.linkedin.com/in/seu-perfil', '_blank');
+                }}
+                className="bg-transparent border-2 border-green-500 hover:bg-green-500/10 text-green-400 font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 group"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                LinkedIn
+                <ExternalLink className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform inline" />
               </motion.button>
             </motion.div>
 

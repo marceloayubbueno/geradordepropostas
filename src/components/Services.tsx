@@ -15,32 +15,32 @@ const Services = () => {
 
   const services = [
     {
-      icon: Globe,
-      title: 'Sites e Landing Pages',
-      description: 'Sites institucionais e landing pages de alta conversão para representar sua marca',
-      features: ['Design responsivo', 'SEO otimizado', 'Foco em conversão'],
+      icon: Code,
+      title: 'Front-end Development',
+      description: 'Desenvolvimento de interfaces modernas e escaláveis com React, Next.js e TypeScript',
+      features: ['React & Next.js', 'TypeScript', 'Tailwind CSS'],
       color: 'from-green-500 to-emerald-500',
     },
     {
-      icon: Code,
-      title: 'Sistemas Web',
-      description: 'Soluções web sob medida para suas necessidades específicas de negócio',
-      features: ['Desenvolvimento custom', 'Integrações APIs', 'Relatórios avançados'],
+      icon: Zap,
+      title: 'Performance & UX',
+      description: 'Otimização de métricas e experiência do usuário com foco em Core Web Vitals',
+      features: ['Lighthouse 90+', 'Core Web Vitals', 'Responsivo & Acessível'],
       color: 'from-emerald-500 to-green-500',
     },
     {
-      icon: ShoppingCart,
-      title: 'E-commerce',
-      description: 'Lojas virtuais robustas e escaláveis para vender seus produtos online',
-      features: ['Catálogo de produtos', 'Gateway de pagamento', 'Gestão de pedidos'],
+      icon: Workflow,
+      title: 'Integrações & APIs',
+      description: 'Desenvolvimento e integração de APIs REST com serviços externos e automações',
+      features: ['APIs REST', 'WhatsApp & CRMs', 'Automações'],
       color: 'from-green-600 to-emerald-600',
     },
     {
-      icon: Workflow,
-      title: 'Automações Inteligentes',
-      description: 'Automações de processos com N8N para otimizar seu fluxo de trabalho',
-      features: ['Integração de sistemas', 'Workflows automatizados', 'Economia de tempo'],
-      color: 'from-green-500 to-emerald-500',
+      icon: Database,
+      title: 'Marketing Tech',
+      description: 'Implementação de ferramentas de analytics, tracking e otimização de conversão',
+      features: ['Google Analytics', 'Tag Manager', 'Landing Pages de Alta Conversão'],
+      color: 'from-emerald-600 to-green-600',
     }
   ]
 
@@ -84,7 +84,7 @@ const Services = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 leading-tight">
-            Desenvolvimento <span className="text-green-400">Web e Automações</span>
+            Skills & <span className="text-green-400">Expertise</span>
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-500 mx-auto"></div>
         </motion.div>
@@ -175,26 +175,6 @@ const Services = () => {
           })}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div 
-          className="text-center mt-24"
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <motion.button
-            onClick={() => {
-              const form = document.getElementById('formulario-contato');
-              if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }}
-            className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-6 px-12 rounded-2xl text-xl shadow-2xl hover:shadow-green-500/25 transition-all duration-300 group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Falar com Especialista
-            <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform inline" />
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   )
