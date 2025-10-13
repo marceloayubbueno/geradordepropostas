@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PageBreak } from '@react-pdf/renderer';
 import { DocumentData, getProposalText } from '@/types/document';
 
 interface PDFDocumentProps {
@@ -6,21 +6,152 @@ interface PDFDocumentProps {
   selectedTemplateId?: string;
 }
 
-// Estilos do PDF - IDÊNTICOS AO PREVIEW
+// Estilos do PDF
 const styles = StyleSheet.create({
   page: {
-    padding: 60,
-    fontSize: 12,
-    fontFamily: 'Helvetica',
+    paddingTop: 70,
+    paddingBottom: 56,
+    paddingLeft: 56,
+    paddingRight: 56,
+    fontSize: 10,
+    fontFamily: 'Times-Roman',
     backgroundColor: '#ffffff',
+    lineHeight: 1.4,
+  },
+  header: {
+    borderBottom: '2pt solid #d1d5db',
+    paddingBottom: 12,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 4,
+    fontFamily: 'Times-Bold',
+  },
+  proposalNumber: {
+    fontSize: 10,
+    color: '#6b7280',
+    marginBottom: 3,
+  },
+  date: {
+    fontSize: 9,
+    color: '#9ca3af',
+  },
+  titleBox: {
+    backgroundColor: '#059669',
+    padding: 10,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  titleBoxText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    fontFamily: 'Times-Bold',
+  },
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#111827',
+    borderLeftWidth: 4,
+    borderLeftColor: '#059669',
+    paddingLeft: 8,
+    paddingVertical: 4,
+    backgroundColor: '#f0fdf4',
+    marginTop: 12,
+    marginBottom: 6,
+    fontFamily: 'Times-Bold',
+    lineHeight: 1.3,
+  },
+  text: {
+    fontSize: 11,
+    color: '#1f2937',
+    marginBottom: 12,
     lineHeight: 1.6,
+    textAlign: 'justify',
+  },
+  bulletPoint: {
+    flexDirection: 'row',
+    marginLeft: 20,
+    marginBottom: 6,
+  },
+  bulletIcon: {
+    fontSize: 11,
+    color: '#059669',
+    fontWeight: 'bold',
+    marginRight: 8,
+  },
+  bulletText: {
+    fontSize: 11,
+    color: '#1f2937',
+    lineHeight: 1.5,
+    textAlign: 'justify',
+    flex: 1,
+  },
+  subItem: {
+    flexDirection: 'row',
+    marginLeft: 32,
+    marginBottom: 6,
+  },
+  subIcon: {
+    fontSize: 10,
+    color: '#10b981',
+    marginRight: 6,
+  },
+  subText: {
+    fontSize: 10,
+    color: '#374151',
+    lineHeight: 1.4,
+    textAlign: 'justify',
+    flex: 1,
+  },
+  contactBox: {
+    marginTop: 12,
+    padding: 10,
+    backgroundColor: '#f0fdf4',
+    borderLeftWidth: 4,
+    borderLeftColor: '#059669',
+  },
+  contactTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#047857',
+    marginBottom: 6,
+    fontFamily: 'Times-Bold',
+  },
+  contactInfo: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    marginLeft: 12,
+    marginBottom: 2,
+    lineHeight: 1.4,
+  },
+  footer: {
+    marginTop: 'auto',
+    paddingTop: 12,
+    borderTop: '2pt solid #d1d5db',
+    textAlign: 'center',
+  },
+  footerText: {
+    fontSize: 9,
+    color: '#6b7280',
+    marginBottom: 3,
+  },
+  pageNumber: {
+    fontSize: 8,
+    color: '#9ca3af',
+    marginTop: 6,
   },
 });
 
 const PDFDocument: React.FC<PDFDocumentProps> = ({ data, selectedTemplateId }) => {
   const fixedProposalText = getProposalText(selectedTemplateId);
   
-  // Substituir o nome do corretor no texto
+  // Substituir dados do corretor
   const processedText = fixedProposalText.replace(
     /Kamila Ramos Corrêa/g,
     data.nomeCorretor || '[Nome do Corretor]'
@@ -34,6 +165,7 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({ data, selectedTemplateId }) =
     /@ramos_k/g,
     data.instagramCorretor || '[@usuario]'
   );
+
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -46,267 +178,187 @@ const PDFDocument: React.FC<PDFDocumentProps> = ({ data, selectedTemplateId }) =
 
   const formatCurrency = (value: any) => {
     if (!value) return 'R$ 0,00';
-    const numValue = typeof value === 'number' ? value : parseFloat(String(value).replace(/[^\d,]/g, '').replace(',', '.'));
+    const numValue = typeof value === 'number' ? value : parseFloat(String(value));
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL'
     }).format(numValue);
   };
 
-  return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={{
-          borderBottom: '2pt solid #d1d5db',
-          paddingBottom: 20,
-          marginBottom: 30,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-          <View style={{ flex: 1 }}>
-            <Text style={{
-              fontSize: 24,
-              fontWeight: 'bold',
-              color: '#111827',
-              marginBottom: 8,
-            }}>
-              PROPOSTA COMERCIAL
-            </Text>
-            <Text style={{
-              fontSize: 11,
-              color: '#6b7280',
-              fontWeight: 'medium',
-            }}>
-              Proposta Nº {data.numeroProposta || '_______________'}
-            </Text>
-          </View>
-          <View style={{ alignItems: 'flex-end' }}>
-            <View style={{
-              width: 70,
-              height: 70,
-              backgroundColor: '#059669',
-              borderRadius: 2,
-              marginBottom: 8,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              {data.logoEmpresa ? (
-                <Image 
-                  src={data.logoEmpresa} 
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'contain',
-                    padding: 4
-                  }} 
-                />
-              ) : (
-                <Text style={{
-                  color: '#ffffff',
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}>
-                  LOGO
-                </Text>
-              )}
-            </View>
-            <Text style={{
-              fontSize: 10,
-              color: '#6b7280',
-            }}>
-              {formatDate(data.dataProposta) || 'Data não informada'}
-            </Text>
-          </View>
-        </View>
+  const lines = processedText.split('\n');
+  
+  // Encontrar onde termina a seção 4 para quebrar a página
+  let breakPoint = 0;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].match(/^5\.\s+/)) {
+      breakPoint = i;
+      break;
+    }
+  }
+  
+  const page1Lines = lines.slice(0, breakPoint);
+  const page2Lines = lines.slice(breakPoint);
 
-        {/* Project Title */}
-        <View style={{
-          backgroundColor: '#059669',
-          padding: 16,
-          marginBottom: 24,
+  const renderTextLine = (line: string, index: number) => {
+    if (line.includes('Proposta de Parceria –')) return null;
+    
+    // Títulos numerados
+    if (line.match(/^\d+\.\s+/)) {
+      return (
+        <Text key={index} style={{
+          fontSize: 11,
+          fontWeight: 'bold',
+          color: '#111827',
+          marginTop: 12,
+          marginBottom: 6,
+          fontFamily: 'Times-Bold',
+        }}>
+          {line}
+        </Text>
+      );
+    }
+    
+    // Bullet points
+    if (line.startsWith('•')) {
+      return (
+        <View key={index} style={{
+          flexDirection: 'row',
+          marginLeft: 16,
+          marginBottom: 3,
         }}>
           <Text style={{
-            fontSize: 18,
+            fontSize: 10,
+            color: '#000000',
             fontWeight: 'bold',
-            color: '#ffffff',
-            textAlign: 'center',
-            letterSpacing: 0.5,
-          }}>
+            marginRight: 6,
+            marginTop: 1,
+          }}>•</Text>
+          <Text style={{
+            fontSize: 10,
+            color: '#1f2937',
+            lineHeight: 1.4,
+            textAlign: 'justify',
+            flex: 1,
+          }}>{line.substring(2)}</Text>
+        </View>
+      );
+    }
+    
+    // Sub-itens
+    if (line.trim().startsWith('o ')) {
+      return (
+        <View key={index} style={{
+          flexDirection: 'row',
+          marginLeft: 32,
+          marginBottom: 3,
+        }}>
+          <Text style={{
+            fontSize: 10,
+            color: '#000000',
+            marginRight: 4,
+          }}>o</Text>
+          <Text style={{
+            fontSize: 10,
+            color: '#374151',
+            lineHeight: 1.4,
+            textAlign: 'justify',
+            flex: 1,
+          }}>{line.trim().substring(2)}</Text>
+        </View>
+      );
+    }
+    
+    if (line.trim() === '') {
+      return <View key={index} style={{ height: 3 }} />;
+    }
+    
+    // Seção de contato (alinhada à esquerda)
+    if (line.includes('[Nome do Corretor]') || line.includes('(') || line.includes('@') || line.includes('Instagram:')) {
+      return (
+        <Text key={index} style={{
+          fontSize: 10,
+          color: '#1f2937',
+          marginBottom: 3,
+          lineHeight: 1.4,
+          textAlign: 'left',
+        }}>
+          {line}
+        </Text>
+      );
+    }
+    
+    return (
+      <Text key={index} style={{
+        fontSize: 10,
+        color: '#1f2937',
+        marginBottom: 3,
+        lineHeight: 1.4,
+        textAlign: 'justify',
+      }}>
+        {line}
+      </Text>
+    );
+  };
+
+  return (
+    <Document>
+      {/* PÁGINA 1 */}
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.title}>PROPOSTA COMERCIAL</Text>
+          <Text style={styles.proposalNumber}>
+            Proposta Nº {data.numeroProposta || '_______________'}
+          </Text>
+          <Text style={styles.date}>
+            {formatDate(data.dataProposta) || 'Data não informada'}
+          </Text>
+        </View>
+
+        {/* Título da Parceria */}
+        <View style={styles.titleBox}>
+          <Text style={styles.titleBoxText}>
             {data.tituloParceria || 'Proposta de Parceria – SINDIPOL'}
           </Text>
         </View>
 
-        {/* Fixed Proposal Text */}
-        <View style={{ marginTop: 8 }}>
-          {processedText.split('\n').map((line, index) => {
-            // Título principal (Proposta de Parceria – SINDIPOL) - pular pois já mostramos acima
-            if (line.includes('Proposta de Parceria –')) {
-              return null;
-            }
-            
-            // Subtítulos numerados (1. Quem Somos, 2. Objetivo, etc.)
-            if (line.match(/^\d+\.\s+/)) {
-              return (
-                <View key={index} style={{ marginTop: 24, marginBottom: 12 }}>
-                  <Text style={{
-                    fontSize: 16,
-                    fontWeight: 'bold',
-                    color: '#111827',
-                    borderLeftWidth: 4,
-                    borderLeftColor: '#059669',
-                    paddingLeft: 12,
-                    paddingVertical: 6,
-                    backgroundColor: '#f0fdf4',
-                    lineHeight: 1.4
-                  }}>
-                    {line}
-                  </Text>
-                </View>
-              );
-            }
-            
-            // Bullet points principais (•)
-            if (line.startsWith('•')) {
-              return (
-                <View key={index} style={{ flexDirection: 'row', marginLeft: 20, marginBottom: 8 }}>
-                  <Text style={{ fontSize: 14, color: '#059669', marginRight: 10, fontWeight: 'bold' }}>✓</Text>
-                  <Text style={{ fontSize: 12, flex: 1, lineHeight: 1.6, color: '#1f2937' }}>
-                    {line.substring(2)}
-                  </Text>
-                </View>
-              );
-            }
-            
-            // Sub-itens (linhas com 'o')
-            if (line.trim().startsWith('o ')) {
-              return (
-                <View key={index} style={{ flexDirection: 'row', marginLeft: 40, marginBottom: 6 }}>
-                  <Text style={{ fontSize: 11, color: '#10b981', marginRight: 10 }}>→</Text>
-                  <Text style={{ fontSize: 11, flex: 1, lineHeight: 1.5, color: '#374151' }}>
-                    {line.trim().substring(2)}
-                  </Text>
-                </View>
-              );
-            }
-            
-            // Seção de contato
-            if (line.startsWith('Contato:')) {
-              return (
-                <View key={index} style={{
-                  marginTop: 30,
-                  padding: 20,
-                  backgroundColor: '#f0fdf4',
-                  borderLeftWidth: 4,
-                  borderLeftColor: '#059669'
-                }}>
-                  <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#047857', marginBottom: 8 }}>
-                    {line}
-                  </Text>
-                </View>
-              );
-            }
-            
-            // Informações de contato específicas
-            if (line.includes('Kamila Ramos Corrêa') || line.includes('(27)') || line.includes('@') || line.includes('Instagram:')) {
-              return (
-                <View key={index} style={{ marginLeft: 20, marginBottom: 4 }}>
-                  <Text style={{ fontSize: 11, fontWeight: 'bold', color: '#1f2937', lineHeight: 1.6 }}>
-                    {line}
-                  </Text>
-                </View>
-              );
-            }
-            
-            // Linhas vazias
-            if (line.trim() === '') {
-              return <View key={index} style={{ height: 8 }} />;
-            }
-            
-            // Texto normal (parágrafos)
-            return (
-              <Text key={index} style={{
-                fontSize: 12,
-                lineHeight: 1.6,
-                marginBottom: 8,
-                color: '#1f2937',
-                textAlign: 'justify'
-              }}>
-                {line}
-              </Text>
-            );
-          })}
+        {/* Conteúdo Página 1 */}
+        <View style={{ flex: 1 }}>
+          {page1Lines.map((line, index) => renderTextLine(line, index))}
         </View>
 
-        {/* Values */}
-        {(data.valorTotal || data.condicoesPagamento || data.prazoExecucao) && (
-          <View style={{
-            marginTop: 30,
-            padding: 20,
-            backgroundColor: '#f0fdf4',
-            borderLeftWidth: 4,
-            borderLeftColor: '#059669'
-          }}>
-            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#047857', marginBottom: 12 }}>
-              INVESTIMENTO
-            </Text>
-            {data.valorTotal && (
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#111827', marginBottom: 8 }}>
-                {formatCurrency(data.valorTotal)}
-              </Text>
-            )}
-            {data.condicoesPagamento && (
-              <Text style={{ fontSize: 12, color: '#1f2937', marginBottom: 6, lineHeight: 1.6 }}>
-                <Text style={{ fontWeight: 'bold' }}>Condições de Pagamento:</Text> {data.condicoesPagamento}
-              </Text>
-            )}
-            {data.prazoExecucao && (
-              <Text style={{ fontSize: 12, color: '#1f2937', lineHeight: 1.6 }}>
-                <Text style={{ fontWeight: 'bold' }}>Prazo de Execução:</Text> {data.prazoExecucao}
-              </Text>
-            )}
-          </View>
-        )}
+        {/* Espaçamento */}
+        <View style={{ marginTop: 20, marginBottom: 12 }} />
 
-        {/* Observations */}
-        {data.observacoes && (
-          <View style={{
-            marginTop: 24,
-            padding: 20,
-            backgroundColor: '#fffbeb',
-            borderLeftWidth: 4,
-            borderLeftColor: '#f59e0b'
-          }}>
-            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#92400e', marginBottom: 8 }}>
-              OBSERVAÇÕES
-            </Text>
-            <Text style={{ fontSize: 12, color: '#1f2937', lineHeight: 1.6 }}>
-              {data.observacoes}
-            </Text>
-          </View>
-        )}
+      </Page>
 
-        {/* Footer */}
+      {/* PÁGINA 2 */}
+      <Page size="A4" style={styles.page}>
+        {/* Conteúdo Página 2 */}
+        <View style={{ flex: 1 }}>
+          {page2Lines.map((line, index) => renderTextLine(line, index + breakPoint))}
+        </View>
+
+        {/* Footer Página 2 */}
         <View style={{
-          marginTop: 40,
-          paddingTop: 20,
-          borderTop: '2pt solid #d1d5db'
+          marginTop: 'auto',
+          paddingTop: 12,
+          borderTopWidth: 2,
+          borderTopColor: '#d1d5db',
         }}>
           <View style={{ textAlign: 'center' }}>
-            <Text style={{ fontSize: 10, color: '#6b7280', marginBottom: 4 }}>
+            <Text style={{ fontSize: 9, color: '#4b5563', marginBottom: 2 }}>
               Proposta válida por: {data.validadeProposta || '30 dias'}
             </Text>
-            <Text style={{ fontSize: 10, color: '#6b7280', marginBottom: 4 }}>
-              Data da Proposta: {formatDate(data.dataProposta) || 'Data não informada'}
+            <Text style={{ fontSize: 9, color: '#4b5563', marginBottom: 2 }}>
+              Data: {formatDate(data.dataProposta)}
             </Text>
-            <Text style={{ fontSize: 10, color: '#6b7280', fontWeight: 'bold', marginBottom: 12 }}>
-              Proposta Nº {data.numeroProposta || 'N/A'}
+            <Text style={{ fontSize: 9, color: '#4b5563', marginBottom: 4 }}>
+              Proposta Nº {data.numeroProposta || 'PRCP-2024-0047'}
             </Text>
-            <View style={{ paddingTop: 12, borderTop: '1pt solid #e5e7eb' }}>
-              <Text style={{ fontSize: 9, color: '#9ca3af' }}>
-                {data.nomeEmpresa || 'Sua Empresa'} | {data.emailEmpresa || 'email@empresa.com'} | {data.telefoneEmpresa || 'Telefone'}
-              </Text>
-            </View>
+            <Text style={{ fontSize: 9, color: '#9ca3af' }}>
+              Página 2 de 2
+            </Text>
           </View>
         </View>
       </Page>

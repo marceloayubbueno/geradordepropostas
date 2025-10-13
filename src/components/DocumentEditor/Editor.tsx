@@ -9,7 +9,7 @@ import Preview from './Preview';
 import PreviewCard from './PreviewCard';
 import PDFDocument from './PDFDocument';
 import TemplateGallery from './TemplateGallery';
-import { DocumentData, defaultCompanyData } from '@/types/document';
+import { DocumentData } from '@/types/document';
 import { ProposalTemplate } from '@/types/templates';
 
 const DocumentEditor = () => {
@@ -20,15 +20,6 @@ const DocumentEditor = () => {
 
   // Estado do documento com valores padrão
   const [documentData, setDocumentData] = useState<DocumentData>({
-    // Empresa (editáveis)
-    nomeEmpresa: '',
-    logoEmpresa: '',
-    cnpjEmpresa: '',
-    enderecoEmpresa: '',
-    contatoEmpresa: '',
-    emailEmpresa: '',
-    telefoneEmpresa: '',
-    
     // Corretor (vazios para edição)
     nomeCorretor: '',
     telefoneCorretor: '',
@@ -193,7 +184,7 @@ const DocumentEditor = () => {
         </div>
 
         {/* Desktop: Preview Area */}
-        <main className="hidden lg:block flex-1 overflow-y-auto bg-gray-800">
+        <main className="hidden lg:block flex-1 bg-gray-100 overflow-y-auto">
           <Preview documentData={documentData} selectedTemplateId={selectedTemplateId} />
         </main>
       </div>

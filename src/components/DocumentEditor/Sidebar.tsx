@@ -34,38 +34,32 @@ const Sidebar = ({ documentData, onFieldChange }: SidebarProps) => {
 
   const sections = [
     { 
-      id: 'empresa', 
-      title: '1º - Dados da Empresa', 
-      icon: Building2,
+      id: 'corretor', 
+      title: '1º - Dados do Corretor', 
+      icon: User,
       color: 'from-blue-500 to-cyan-500'
     },
     { 
-      id: 'corretor', 
-      title: '2º - Dados do Corretor', 
-      icon: User,
-      color: 'from-purple-500 to-pink-500'
-    },
-    { 
       id: 'parceria', 
-      title: '3º - Dados da Parceria', 
+      title: '2º - Dados da Parceria', 
       icon: Briefcase,
       color: 'from-green-500 to-emerald-500'
     },
     { 
       id: 'proposta', 
-      title: '4º - Dados da Proposta', 
+      title: '3º - Dados da Proposta', 
       icon: FileText,
-      color: 'from-orange-500 to-red-500'
+      color: 'from-purple-500 to-pink-500'
     },
     { 
       id: 'valores', 
-      title: '5º - Valores e Prazos', 
+      title: '4º - Valores e Prazos', 
       icon: DollarSign,
       color: 'from-yellow-500 to-amber-500'
     },
     { 
       id: 'observacoes', 
-      title: '6º - Observações', 
+      title: '5º - Observações', 
       icon: MessageSquare,
       color: 'from-red-500 to-rose-500'
     },
