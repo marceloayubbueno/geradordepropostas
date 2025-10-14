@@ -38,10 +38,10 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
 
   const lines = processedText.split('\n');
   
-  // Encontrar onde termina a seção 4
+  // Encontrar onde termina a seção 5 (Vantagens para os Associados)
   let breakPoint = 0;
   for (let i = 0; i < lines.length; i++) {
-    if (lines[i].match(/^5\.\s+/)) {
+    if (lines[i].match(/^6\.\s+/)) {
       breakPoint = i;
       break;
     }
@@ -56,7 +56,7 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
     // Títulos numerados
     if (line.match(/^\d+\.\s+/)) {
       return (
-        <h3 key={index} className="font-bold text-gray-900 mt-4 mb-2 text-base">
+        <h3 key={index} className="font-bold mt-4 mb-2 text-base" style={{ color: '#60C0C0' }}>
           {line}
         </h3>
       );
@@ -66,7 +66,7 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
     if (line.startsWith('•')) {
       return (
         <div key={index} className="ml-4 mb-1 flex items-start">
-          <span className="text-black font-bold mr-2 text-sm">•</span>
+          <span className="font-bold mr-2 text-sm" style={{ color: '#8C6B75' }}>•</span>
           <p className="text-gray-800 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
             {line.substring(2)}
           </p>
@@ -105,42 +105,70 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
   };
 
   return (
-    <div className="h-full p-2 lg:p-8 overflow-y-auto bg-gray-100">
-      <div className="max-w-full lg:max-w-[420mm] mx-auto flex flex-col lg:flex-row gap-4 lg:gap-6">
+    <div className="h-full overflow-y-auto bg-gray-100">
+      <div className="min-h-full p-4 lg:p-8 flex items-start justify-center">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
         
         {/* PÁGINA 1 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm]"
+          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm] relative"
           style={{ 
             height: '297mm',
             fontFamily: '"Times New Roman", Times, serif',
             overflow: 'hidden'
           }}
         >
-          <div className="h-full flex flex-col px-4 py-6 lg:px-[30mm] lg:pt-[10mm] lg:pb-[30mm]">
+          {/* Marca d'água Página 1 */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `
+                radial-gradient(circle at 85% 85%, rgba(140, 107, 117, 0.03) 0%, transparent 50%),
+                url(/images/03.jpg)
+              `,
+              backgroundSize: '280px 280px, 280px 280px',
+              backgroundPosition: 'bottom right, bottom right',
+              backgroundRepeat: 'no-repeat, no-repeat',
+              opacity: 0.25,
+              zIndex: 0,
+              transform: 'rotate(-12deg)',
+              transformOrigin: 'bottom right',
+              marginBottom: '40px',
+              marginRight: '50px',
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+            }}
+          />
+          <div className="h-full flex flex-col relative z-10" style={{ padding: '20mm' }}>
             
             {/* Header */}
-            <div className="border-b-2 border-gray-300 pb-3 mb-4 text-center">
-              <h1 className="text-lg font-bold text-gray-900 mb-1">
-                PROPOSTA COMERCIAL
-              </h1>
-              <p className="text-xs text-gray-600">
+            <div className="border-b-2 border-gray-300 pb-3 mb-4">
+              <div className="flex items-center justify-center mb-2 relative">
+                <img 
+                  src="/images/04.jpg" 
+                  alt="Star Life Logo" 
+                  className="h-8 w-auto absolute left-0"
+                />
+                <h1 className="text-lg font-bold text-gray-900">
+                  PROPOSTA COMERCIAL
+                </h1>
+              </div>
+              <p className="text-xs text-gray-600 text-center">
                 Proposta Nº {documentData.numeroProposta || 'PRCP-2024-0047'} - {formatDate(documentData.dataProposta) || '06 de dezembro de 2024'}
               </p>
             </div>
 
             {/* Título */}
-            <div className="bg-green-600 text-white p-3 mb-4 text-center">
-              <h2 className="text-sm font-bold">
+            <div className="p-3 mb-4 text-center" style={{ backgroundColor: '#8C6B75' }}>
+              <h2 className="text-sm font-bold text-white">
                 {documentData.tituloParceria || 'Proposta de Parceria – SINDIPOL'}
               </h2>
             </div>
 
             {/* Conteúdo Página 1 */}
-            <div className="flex-1 space-y-3 text-sm">
+            <div className="flex-1 space-y-2 text-sm">
               {page1Lines.map((line, index) => renderLine(line, index))}
             </div>
 
@@ -152,34 +180,119 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm]"
+          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm] relative"
           style={{ 
             height: '297mm',
             fontFamily: '"Times New Roman", Times, serif',
             overflow: 'hidden'
           }}
         >
-          <div className="h-full flex flex-col px-4 py-6 lg:px-[30mm] lg:pt-[10mm] lg:pb-[30mm]">
+          {/* Marca d'água Página 2 */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `
+                radial-gradient(circle at 85% 85%, rgba(96, 192, 192, 0.03) 0%, transparent 50%),
+                url(/images/03.jpg)
+              `,
+              backgroundSize: '280px 280px, 280px 280px',
+              backgroundPosition: 'bottom right, bottom right',
+              backgroundRepeat: 'no-repeat, no-repeat',
+              opacity: 0.25,
+              zIndex: 0,
+              transform: 'rotate(-12deg)',
+              transformOrigin: 'bottom right',
+              marginBottom: '40px',
+              marginRight: '50px',
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+            }}
+          />
+          <div className="h-full flex flex-col relative z-10" style={{ padding: '20mm' }}>
             
             {/* Conteúdo Página 2 */}
-            <div className="flex-1 space-y-3 text-sm">
+            <div className="flex-1 space-y-2 text-sm">
               {page2Lines.map((line, index) => renderLine(line, index))}
             </div>
 
-            {/* Footer Página 2 */}
-            <div className="mt-auto pt-3 border-t-2 border-gray-300">
-              <div className="text-center text-xs text-gray-600 space-y-1">
-                <p>Proposta válida por: {documentData.validadeProposta || '30 dias'}</p>
-                <p>Data: {formatDate(documentData.dataProposta)}</p>
-                <p>Proposta Nº {documentData.numeroProposta || 'PRCP-2024-0047'}</p>
+            {/* Planos que Oferecemos */}
+            <div className="mt-4 mb-6">
+              <h3 className="font-bold mb-3 text-sm" style={{ color: '#60C0C0' }}>
+                Planos que Oferecemos:
+              </h3>
+              <div className="grid grid-cols-3 gap-8">
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/amil-logo.png" alt="Amil" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/unimed-logo.png" alt="Unimed" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/bradesco-saude-logo.png" alt="Bradesco Saúde" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/medsenior.png" alt="Medsenior" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/samp-logo.png" alt="Samp" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/sao-bernardo-logo.png" alt="São Bernardo" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/best-senior-logo.png" alt="Best Senior" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/mais-saude-logo.png" alt="Mais Saúde" className="h-12 w-auto object-contain" />
+                </div>
+                <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <img src="/images/planos/you-logo.png" alt="You" className="h-12 w-auto object-contain" />
+                </div>
               </div>
-              <div className="text-center text-xs text-gray-400 mt-2">
+            </div>
+
+            {/* Footer Página 2 */}
+            <div className="mt-auto pt-4" style={{ borderTop: '2px solid #8C6B75' }}>
+              <div className="flex items-center justify-between">
+                <div style={{ fontFamily: '"IBM Plex Sans", "Inter", sans-serif' }}>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 flex items-center justify-center" style={{ backgroundColor: 'white', borderRadius: '7px', border: '2px solid #79C6CC' }}>
+                        <svg width="28" height="28" viewBox="0 0 448 512" fill="#79C6CC">
+                          <path d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '12px', fontWeight: '400', color: 'rgb(111, 116, 126)', lineHeight: '14.4px' }}>Ed. Enseada Tower</div>
+                        <div style={{ fontSize: '16px', fontWeight: '700', color: 'rgb(121, 198, 204)', lineHeight: '24px' }}>Av. João Batista Parra, 673</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-9 h-9 flex items-center justify-center" style={{ backgroundColor: 'white', borderRadius: '7px', border: '2px solid #79C6CC' }}>
+                        <svg width="28" height="28" viewBox="0 0 512 512" fill="#79C6CC">
+                          <path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: '12px', fontWeight: '400', color: 'rgb(111, 116, 126)', lineHeight: '14.4px' }}>Entre em Contato</div>
+                        <div style={{ fontSize: '16px', fontWeight: '700', color: 'rgb(121, 198, 204)', lineHeight: '24px' }}>(27) 99861-7901</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <img 
+                  src="/images/03.jpg" 
+                  alt="Star Life Logo" 
+                  className="h-8 w-auto"
+                />
+              </div>
+              <div className="text-center text-xs mt-2" style={{ color: '#60C0C0' }}>
                 Página 2 de 2
               </div>
             </div>
           </div>
         </motion.div>
 
+        </div>
       </div>
     </div>
   );
