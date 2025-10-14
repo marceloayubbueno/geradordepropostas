@@ -105,23 +105,22 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
   };
 
   return (
-    <div className="h-full p-4 lg:p-8 overflow-y-auto bg-gray-100">
-      <div className="max-w-[420mm] mx-auto flex gap-6">
+    <div className="h-full p-2 lg:p-8 overflow-y-auto bg-gray-100">
+      <div className="max-w-full lg:max-w-[420mm] mx-auto flex flex-col lg:flex-row gap-4 lg:gap-6">
         
         {/* PÁGINA 1 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white shadow-xl flex-shrink-0"
+          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm]"
           style={{ 
-            width: '210mm',
             height: '297mm',
             fontFamily: '"Times New Roman", Times, serif',
             overflow: 'hidden'
           }}
         >
-          <div className="h-full flex flex-col" style={{ padding: '10mm 30mm 30mm 30mm' }}>
+          <div className="h-full flex flex-col px-4 py-6 lg:px-[30mm] lg:pt-[10mm] lg:pb-[30mm]">
             
             {/* Header */}
             <div className="border-b-2 border-gray-300 pb-3 mb-4 text-center">
@@ -153,15 +152,14 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white shadow-xl flex-shrink-0"
+          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm]"
           style={{ 
-            width: '210mm',
             height: '297mm',
             fontFamily: '"Times New Roman", Times, serif',
             overflow: 'hidden'
           }}
         >
-          <div className="h-full flex flex-col" style={{ padding: '10mm 30mm 30mm 30mm' }}>
+          <div className="h-full flex flex-col px-4 py-6 lg:px-[30mm] lg:pt-[10mm] lg:pb-[30mm]">
             
             {/* Conteúdo Página 2 */}
             <div className="flex-1 space-y-3 text-sm">
