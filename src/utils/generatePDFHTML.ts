@@ -3,6 +3,13 @@ import { DocumentData, getProposalText } from '@/types/document';
 export function generatePDFHTML(documentData: DocumentData): string {
   const fixedProposalText = getProposalText();
   
+  // Detectar URL base para imagens
+  const baseUrl = process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : process.env.NODE_ENV === 'production' 
+      ? 'https://geradordepropostas.vercel.app'
+      : 'http://localhost:3000';
+  
   // Substituir dados do corretor no texto
   const processedText = fixedProposalText.replace(
     /Kamila Ramos Corrêa/g,
@@ -149,7 +156,7 @@ export function generatePDFHTML(documentData: DocumentData): string {
           left: 0;
           right: 0;
           bottom: 0;
-          background: radial-gradient(circle at 85% 85%, rgba(140, 107, 117, 0.03) 0%, transparent 50%), url('http://localhost:3000/images/03.jpg');
+          background: radial-gradient(circle at 85% 85%, rgba(140, 107, 117, 0.03) 0%, transparent 50%), url('${baseUrl}/images/03.jpg');
           background-size: 280px 280px, 280px 280px;
           background-position: bottom right, bottom right;
           background-repeat: no-repeat, no-repeat;
@@ -285,7 +292,7 @@ export function generatePDFHTML(documentData: DocumentData): string {
           <!-- Header -->
           <div class="header">
             <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 8px; position: relative; width: 100%;">
-              <img src="http://localhost:3000/images/04.jpg" alt="Star Life Logo" style="height: 32px; width: auto; position: absolute; left: 0;" />
+              <img src="${baseUrl}/images/04.jpg" alt="Star Life Logo" style="height: 32px; width: auto; position: absolute; left: 0;" />
               <h1 style="margin: 0; font-size: 20px; font-weight: bold; color: #8C6B75;">PROPOSTA DE PARCERIA</h1>
             </div>
             <p style="font-size: 12px; color: #6b7280; margin: 0; text-align: center;">
@@ -334,7 +341,7 @@ export function generatePDFHTML(documentData: DocumentData): string {
                 { nome: 'You', img: 'you-logo.png' }
               ].map(plano => `
                 <div class="plano-card">
-                  <img src="http://localhost:3000/images/planos/${plano.img}" alt="${plano.nome}" style="max-height: 48px; max-width: 100%; object-fit: contain;" />
+                  <img src="${baseUrl}/images/planos/${plano.img}" alt="${plano.nome}" style="max-height: 48px; max-width: 100%; object-fit: contain;" />
                 </div>
               `).join('')}
             </div>
@@ -367,7 +374,7 @@ export function generatePDFHTML(documentData: DocumentData): string {
                   </div>
                 </div>
               </div>
-              <img src="http://localhost:3000/images/03.jpg" alt="Star Life Logo" style="height: 32px; width: auto;" />
+              <img src="${baseUrl}/images/03.jpg" alt="Star Life Logo" style="height: 32px; width: auto;" />
             </div>
             <div style="text-align: center; font-size: 12px; color: #60C0C0; margin-top: 8px;">
               Página 2 de 2
