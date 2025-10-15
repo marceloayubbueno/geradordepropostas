@@ -18,7 +18,7 @@ const PreviewCard = ({ documentData }: PreviewCardProps) => {
       {/* Header com botão de expandir/recolher */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-4 mb-3 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 transition-all shadow-md"
+        className="w-full flex items-center justify-between p-4 mb-3 rounded-lg bg-gradient-to-r from-[#8C6B75] to-[#79C6CC] hover:from-[#8C6B75]/80 hover:to-[#79C6CC]/80 transition-all shadow-md"
       >
         <div className="flex items-center gap-2">
           <Eye className="w-5 h-5 text-white" />

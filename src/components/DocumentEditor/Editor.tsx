@@ -103,20 +103,20 @@ const DocumentEditor = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-black/80 backdrop-blur-sm border-b border-green-500/20 sticky top-0 z-50">
+      <header className="bg-black/80 backdrop-blur-sm border-b border-[#8C6B75]/20 sticky top-0 z-50">
         <div className="px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo/Title */}
             <div className="flex items-center space-x-3">
               <button
                 onClick={() => setShowSidebar(!showSidebar)}
-                className="lg:hidden p-2 text-green-400 hover:bg-green-500/10 rounded-lg transition-colors"
+                className="lg:hidden p-2 text-[#79C6CC] hover:bg-[#79C6CC]/10 rounded-lg transition-colors"
               >
                 {showSidebar ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
               
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-br from-[#8C6B75] to-[#79C6CC] rounded-lg flex items-center justify-center">
                   <FileText className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -139,7 +139,7 @@ const DocumentEditor = () => {
               <motion.button
                 onClick={handleGeneratePDF}
                 disabled={isGenerating}
-                className="flex items-center space-x-2 px-4 lg:px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all shadow-lg hover:shadow-green-500/25"
+                className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#8C6B75] to-[#79C6CC] hover:from-[#8C6B75]/80 hover:to-[#79C6CC]/80 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-all shadow-lg hover:shadow-[#8C6B75]/25"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -154,13 +154,13 @@ const DocumentEditor = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Desktop: Sidebar */}
-        <aside className="hidden lg:block lg:w-96 bg-gray-900 border-r border-green-500/20 overflow-y-auto">
+        <aside className="hidden lg:block lg:w-96 bg-gray-900 border-r border-[#8C6B75]/20 overflow-y-auto">
           <div className="p-6">
             {/* Template Gallery */}
             {/* Editor de Documento */}
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-                <FileText className="w-5 h-5 mr-2 text-green-400" />
+                <FileText className="w-5 h-5 mr-2 text-[#79C6CC]" />
                 Editor de Documento
               </h3>
               <p className="text-gray-300 text-sm">
@@ -183,7 +183,7 @@ const DocumentEditor = () => {
             {/* Editor de Documento */}
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
-                <FileText className="w-5 h-5 mr-2 text-green-400" />
+                <FileText className="w-5 h-5 mr-2 text-[#79C6CC]" />
                 Editor de Documento
               </h3>
               <p className="text-gray-300 text-sm">

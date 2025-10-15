@@ -43,7 +43,7 @@ const Sidebar = ({ documentData, onFieldChange }: SidebarProps) => {
       id: 'parceria', 
       title: '2º - Dados da Parceria', 
       icon: Briefcase,
-      color: 'from-green-500 to-emerald-500'
+      color: 'from-[#8C6B75] to-[#79C6CC]'
     },
     { 
       id: 'proposta', 
@@ -74,7 +74,7 @@ const Sidebar = ({ documentData, onFieldChange }: SidebarProps) => {
       {/* Título da Seção - Destaque verde com botão de recolher */}
       <button
         onClick={() => setIsEditorExpanded(!isEditorExpanded)}
-        className="w-full p-4 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 transition-all shadow-md flex items-center justify-between"
+        className="w-full p-4 rounded-lg bg-gradient-to-r from-[#8C6B75] to-[#79C6CC] hover:from-[#8C6B75]/80 hover:to-[#79C6CC]/80 transition-all shadow-md flex items-center justify-between"
       >
         <div>
           <h2 className="text-sm font-bold text-white uppercase tracking-wide text-left">
@@ -116,7 +116,7 @@ const Sidebar = ({ documentData, onFieldChange }: SidebarProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.05 }}
-            className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-green-500/20 overflow-hidden"
+            className="bg-gray-800/50 backdrop-blur-sm rounded-xl border border-[#8C6B75]/20 overflow-hidden"
           >
             {/* Section Header */}
             <button

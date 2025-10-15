@@ -50,9 +50,9 @@ o <strong>Desconto para associados</strong> na contratação dos planos.
 Com essa parceria, a Associação ganha um benefício real para seus membros, enquanto fortalece suas ações internas e eventos.
 
 Contato
-Kamila Ramos Corrêa – Consultora de Saúde
+Kamila Ramos Corrêa <strong>– Consultora de Saúde</strong>
 (27) 98889-1991
 kamilaramoscorretora@gmail.com
-Instagram: @ramos_k`
+<strong>Instagram:</strong> @ramos_k`
   }
 ];

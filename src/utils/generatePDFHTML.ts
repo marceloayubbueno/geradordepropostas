@@ -6,16 +6,16 @@ export function generatePDFHTML(documentData: DocumentData): string {
   // Substituir dados do corretor no texto
   const processedText = fixedProposalText.replace(
     /Kamila Ramos Corrêa/g,
-    documentData.nomeCorretor || '[Nome do Corretor]'
+    documentData.nomeCorretor ? `<strong>${documentData.nomeCorretor}</strong>` : '<strong>[Nome do Corretor]</strong>'
   ).replace(
     /kamilaramoscorretora@gmail\.com/g,
-    documentData.emailCorretor || '[email@exemplo.com]'
+    documentData.emailCorretor ? `<strong>${documentData.emailCorretor}</strong>` : '<strong>[email@exemplo.com]</strong>'
   ).replace(
     /\(27\) 98889-1991/g,
-    documentData.telefoneCorretor || '[Telefone]'
+    documentData.telefoneCorretor ? `<strong>${documentData.telefoneCorretor}</strong>` : '<strong>[Telefone]</strong>'
   ).replace(
     /@ramos_k/g,
-    documentData.instagramCorretor || '[@usuario]'
+    documentData.instagramCorretor ? `<strong>${documentData.instagramCorretor}</strong>` : '<strong>[@usuario]</strong>'
   ).replace(
     /{percentualComissionamento}/g,
     documentData.percentualComissionamento?.toString() || '10'
@@ -149,10 +149,17 @@ export function generatePDFHTML(documentData: DocumentData): string {
           left: 0;
           right: 0;
           bottom: 0;
-          background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzhjNmI3NSIgb3BhY2l0eT0iMC4wMyIvPjwvc3ZnPg==') center/contain no-repeat;
+          background: radial-gradient(circle at 85% 85%, rgba(140, 107, 117, 0.03) 0%, transparent 50%), url('http://localhost:3000/images/03.jpg');
+          background-size: 280px 280px, 280px 280px;
+          background-position: bottom right, bottom right;
+          background-repeat: no-repeat, no-repeat;
           opacity: 0.25;
           pointer-events: none;
           z-index: 0;
+          transform: rotate(-12deg);
+          transform-origin: bottom right;
+          margin-bottom: 40px;
+          margin-right: 50px;
         }
         
         .content {

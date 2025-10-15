@@ -121,7 +121,7 @@ o <strong>Desconto para associados</strong> na contratação dos planos.
 Com essa parceria, a Associação ganha um benefício real para seus membros, enquanto fortalece suas ações internas e eventos.
 
 Contato
-[Nome do Corretor] – Consultora de Saúde
+[Nome do Corretor] <strong>– Consultora de Saúde</strong>
 [Telefone do Corretor]
 [E-mail do Corretor]
-Instagram: [Instagram do Corretor]`;
+<strong>Instagram:</strong> [Instagram do Corretor]`;

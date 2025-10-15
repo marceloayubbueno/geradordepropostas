@@ -13,16 +13,16 @@ const Preview = ({ documentData }: PreviewProps) => {
   // Substituir o nome do corretor no texto
   const processedText = fixedProposalText.replace(
     /Kamila Ramos Corrêa/g,
-    documentData.nomeCorretor || '[Nome do Corretor]'
+    documentData.nomeCorretor ? `<strong>${documentData.nomeCorretor}</strong>` : '<strong>[Nome do Corretor]</strong>'
   ).replace(
     /kamilaramoscorretora@gmail\.com/g,
-    documentData.emailCorretor || '[email@exemplo.com]'
+    documentData.emailCorretor ? `<strong>${documentData.emailCorretor}</strong>` : '<strong>[email@exemplo.com]</strong>'
   ).replace(
     /\(27\) 98889-1991/g,
-    documentData.telefoneCorretor || '[Telefone]'
+    documentData.telefoneCorretor ? `<strong>${documentData.telefoneCorretor}</strong>` : '<strong>[Telefone]</strong>'
   ).replace(
     /@ramos_k/g,
-    documentData.instagramCorretor || '[@usuario]'
+    documentData.instagramCorretor ? `<strong>${documentData.instagramCorretor}</strong>` : '<strong>[@usuario]</strong>'
   ).replace(
     /{percentualComissionamento}/g,
     documentData.percentualComissionamento?.toString() || '10'
