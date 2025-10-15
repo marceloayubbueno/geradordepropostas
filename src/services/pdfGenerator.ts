@@ -1,10 +1,27 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 
 export async function generatePdfFromHtml(htmlContent: string): Promise<Buffer> {
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  // Verificar se está em ambiente serverless (Vercel)
+  const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+  
+  let browser;
+  
+  if (isServerless) {
+    // Configuração para Vercel/serverless
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    });
+  } else {
+    // Configuração para desenvolvimento local
+    const puppeteerLocal = await import('puppeteer');
+    browser = await puppeteerLocal.default.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+  }
   
   const page = await browser.newPage();
 

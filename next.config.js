@@ -5,6 +5,7 @@ const nextConfig = {
       'upload.wikimedia.org',
     ],
   },
+  serverExternalPackages: ["@sparticuz/chromium", "puppeteer-core"],
 }
 
 module.exports = nextConfig 
