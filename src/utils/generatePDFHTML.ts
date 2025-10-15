@@ -3,12 +3,13 @@ import { DocumentData, getProposalText } from '@/types/document';
 export function generatePDFHTML(documentData: DocumentData): string {
   const fixedProposalText = getProposalText();
   
-  // Detectar URL base para imagens
-  const baseUrl = process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : process.env.NODE_ENV === 'production' 
-      ? 'https://geradordepropostas.vercel.app'
-      : 'http://localhost:3000';
+  // Detectar URL base para imagens - sempre usar produção se não for localhost
+  const baseUrl = process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:3000'
+    : 'https://geradordepropostas.vercel.app';
+  
+  console.log('Base URL detectada:', baseUrl);
+  console.log('NODE_ENV:', process.env.NODE_ENV);
   
   // Substituir dados do corretor no texto
   const processedText = fixedProposalText.replace(
