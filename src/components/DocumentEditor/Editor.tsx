@@ -22,7 +22,9 @@ const DocumentEditor = () => {
     instagramCorretor: '',
     
     // Parceria
-    tituloParceria: 'Proposta de Parceria – SINDIPOL',
+    nomeResponsavel: '',
+    cargoResponsavel: '',
+    tituloParceria: 'SINDIPOL',
     
     // Proposta
     numeroProposta: `PROP-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`,

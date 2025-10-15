@@ -52,11 +52,25 @@ const Preview = ({ documentData }: PreviewProps) => {
   const page1Lines = lines.slice(0, breakPoint);
   const page2Lines = lines.slice(breakPoint);
 
+  // Adicionar seção de observações se preenchida
+  const addObservationsSection = (linesArray: string[]) => {
+    if (documentData.observacoes && documentData.observacoes.trim()) {
+      const observationsIndex = linesArray.findIndex(line => line.includes('Contato'));
+      if (observationsIndex !== -1) {
+        linesArray.splice(observationsIndex, 0, '', '8. Observações', '', documentData.observacoes);
+      }
+    }
+    return linesArray;
+  };
+
+  const page1LinesWithObservations = addObservationsSection([...page1Lines]);
+  const page2LinesWithObservations = addObservationsSection([...page2Lines]);
+
   const renderLine = (line: string, index: number) => {
     if (line.includes('Proposta de Parceria –')) return null;
     
-    // Títulos numerados
-    if (line.match(/^\d+\.\s+/)) {
+    // Títulos numerados e "Contato"
+    if (line.match(/^\d+\.\s+/) || line.trim() === 'Contato') {
       return (
         <h3 
           key={index} 
@@ -92,8 +106,7 @@ const Preview = ({ documentData }: PreviewProps) => {
               boxShadow: '0 2px 4px rgba(140, 107, 117, 0.3)'
             }}
           />
-          <p className="text-gray-800 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
-            {line.substring(2)}
+          <p className="text-gray-800 text-xs leading-relaxed" style={{ textAlign: 'justify' }} dangerouslySetInnerHTML={{ __html: line.substring(2).replace(/\[([^\]]+)\]/g, '<strong>$1</strong>') }}>
           </p>
         </div>
       );
@@ -103,9 +116,8 @@ const Preview = ({ documentData }: PreviewProps) => {
     if (line.trim().startsWith('o ')) {
       return (
         <div key={index} className="ml-8 mb-1 flex items-start">
-          <span className="text-black mr-2 text-sm">o</span>
-          <p className="text-gray-800 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
-            {line.trim().substring(2)}
+          <span className="text-black mr-2 text-xs">o</span>
+          <p className="text-gray-800 text-xs leading-relaxed" style={{ textAlign: 'justify' }} dangerouslySetInnerHTML={{ __html: line.trim().substring(2).replace(/\[([^\]]+)\]/g, '<strong>$1</strong>') }}>
           </p>
         </div>
       );
@@ -116,15 +128,13 @@ const Preview = ({ documentData }: PreviewProps) => {
     // Seção de contato (alinhada à esquerda)
     if (line.includes('[Nome do Corretor]') || line.includes('(') || line.includes('@') || line.includes('Instagram:')) {
       return (
-        <p key={index} className="text-gray-800 text-sm leading-relaxed mb-1" style={{ textAlign: 'left' }}>
-          {line}
+        <p key={index} className="text-gray-800 text-xs leading-relaxed mb-1" style={{ textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: line.replace(/\[([^\]]+)\]/g, '<strong>$1</strong>') }}>
         </p>
       );
     }
     
     return (
-      <p key={index} className="text-gray-800 text-sm leading-relaxed mb-1" style={{ textAlign: 'justify' }}>
-        {line}
+      <p key={index} className="text-gray-800 text-xs leading-relaxed mb-1" style={{ textAlign: 'justify' }} dangerouslySetInnerHTML={{ __html: line.replace(/\[([^\]]+)\]/g, '<strong>$1</strong>') }}>
       </p>
     );
   };
@@ -145,7 +155,7 @@ const Preview = ({ documentData }: PreviewProps) => {
             borderRadius: '8px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05)',
             height: '297mm',
-            fontFamily: '"Times New Roman", Times, serif',
+            fontFamily: '"Arial", sans-serif',
             overflow: 'hidden'
           }}
         >
@@ -197,11 +207,11 @@ const Preview = ({ documentData }: PreviewProps) => {
                   className="h-8 w-auto absolute left-0"
                 />
                 <h1 className="text-lg font-bold text-gray-900">
-                  PROPOSTA COMERCIAL
+                  PROPOSTA DE PARCERIA
                 </h1>
               </div>
               <p className="text-xs text-gray-600 text-center">
-                Proposta Nº {documentData.numeroProposta || 'PRCP-2024-0047'} - {formatDate(documentData.dataProposta) || '06 de dezembro de 2024'}
+                Proposta Nº {documentData.numeroProposta || 'PRCP-2024-0047'} - {formatDate(documentData.dataProposta) || '06 de dezembro de 2024'}, válido por {documentData.validadeProposta || '30 dias'}
               </p>
             </div>
 
@@ -219,13 +229,13 @@ const Preview = ({ documentData }: PreviewProps) => {
                   textShadow: '0 2px 4px rgba(0,0,0,0.3)'
                 }}
               >
-                {documentData.tituloParceria || 'Proposta de Parceria – SINDIPOL'}
+                Sr: {documentData.nomeResponsavel || '[Nome do Responsável]'}, {documentData.cargoResponsavel || '[Cargo do Responsável]'} – {documentData.tituloParceria || 'SINDIPOL'}
               </h2>
             </div>
 
             {/* Conteúdo Página 1 */}
-            <div className="flex-1 space-y-2 text-sm">
-              {page1Lines.map((line, index) => renderLine(line, index))}
+            <div className="flex-1 space-y-2 text-xs">
+              {page1LinesWithObservations.map((line, index) => renderLine(line, index))}
             </div>
 
           </div>
@@ -242,7 +252,7 @@ const Preview = ({ documentData }: PreviewProps) => {
             borderRadius: '8px',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05)',
             height: '297mm',
-            fontFamily: '"Times New Roman", Times, serif',
+            fontFamily: '"Arial", sans-serif',
             overflow: 'hidden'
           }}
         >
@@ -277,8 +287,8 @@ const Preview = ({ documentData }: PreviewProps) => {
           >
             
             {/* Conteúdo Página 2 */}
-            <div className="flex-1 space-y-2 text-sm">
-              {page2Lines.map((line, index) => renderLine(line, index))}
+            <div className="flex-1 space-y-2 text-xs">
+              {page2LinesWithObservations.map((line, index) => renderLine(line, index))}
             </div>
 
             {/* Planos que Oferecemos */}

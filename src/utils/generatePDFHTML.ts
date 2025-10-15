@@ -45,11 +45,25 @@ export function generatePDFHTML(documentData: DocumentData): string {
   const page1Lines = lines.slice(0, breakPoint);
   const page2Lines = lines.slice(breakPoint);
 
+  // Adicionar seção de observações se preenchida
+  const addObservationsSection = (linesArray: string[]) => {
+    if (documentData.observacoes && documentData.observacoes.trim()) {
+      const observationsIndex = linesArray.findIndex(line => line.includes('Contato'));
+      if (observationsIndex !== -1) {
+        linesArray.splice(observationsIndex, 0, '', '8. Observações', '', documentData.observacoes);
+      }
+    }
+    return linesArray;
+  };
+
+  const page1LinesWithObservations = addObservationsSection([...page1Lines]);
+  const page2LinesWithObservations = addObservationsSection([...page2Lines]);
+
   const renderLineToHTML = (line: string): string => {
     if (line.includes('Proposta de Parceria –')) return '';
     
-    // Títulos numerados
-    if (line.match(/^\d+\.\s+/)) {
+    // Títulos numerados e "Contato"
+    if (line.match(/^\d+\.\s+/) || line.trim() === 'Contato') {
       return `
         <h3 style="font-weight: bold; margin-top: 16px; margin-bottom: 8px; font-size: 16px; color: #60C0C0; text-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative;">
           <span style="background: linear-gradient(90deg, rgba(96, 192, 192, 0.1) 0%, transparent 100%); padding: 4px 8px; border-radius: 4px; display: inline-block;">
@@ -64,8 +78,8 @@ export function generatePDFHTML(documentData: DocumentData): string {
       return `
         <div style="margin-left: 16px; margin-bottom: 4px; display: flex; align-items: flex-start;">
           <div style="width: 8px; height: 8px; margin-right: 12px; margin-top: 8px; border-radius: 50%; flex-shrink: 0; background-color: #8C6B75; box-shadow: 0 2px 4px rgba(140, 107, 117, 0.3);"></div>
-          <p style="color: #1f2937; font-size: 14px; line-height: 1.5; text-align: justify; margin: 0;">
-            ${line.substring(2)}
+          <p style="color: #1f2937; font-size: 12px; line-height: 1.5; text-align: justify; margin: 0;">
+            ${line.substring(2).replace(/\[([^\]]+)\]/g, '<strong>$1</strong>')}
           </p>
         </div>
       `;
@@ -75,9 +89,9 @@ export function generatePDFHTML(documentData: DocumentData): string {
     if (line.trim().startsWith('o ')) {
       return `
         <div style="margin-left: 32px; margin-bottom: 4px; display: flex; align-items: flex-start;">
-          <span style="color: black; margin-right: 8px; font-size: 14px;">o</span>
-          <p style="color: #1f2937; font-size: 14px; line-height: 1.5; text-align: justify; margin: 0;">
-            ${line.trim().substring(2)}
+          <span style="color: black; margin-right: 8px; font-size: 12px;">o</span>
+          <p style="color: #1f2937; font-size: 12px; line-height: 1.5; text-align: justify; margin: 0;">
+            ${line.trim().substring(2).replace(/\[([^\]]+)\]/g, '<strong>$1</strong>')}
           </p>
         </div>
       `;
@@ -87,14 +101,14 @@ export function generatePDFHTML(documentData: DocumentData): string {
     
     // Seção de contato (alinhada à esquerda)
     if (line.includes('[Nome do Corretor]') || line.includes('(') || line.includes('@') || line.includes('Instagram:')) {
-      return `<p style="color: #1f2937; font-size: 14px; line-height: 1.5; margin-bottom: 4px; text-align: left; margin: 0;">${line}</p>`;
+      return `<p style="color: #1f2937; font-size: 12px; line-height: 1.5; margin-bottom: 4px; text-align: left; margin: 0;">${line.replace(/\[([^\]]+)\]/g, '<strong>$1</strong>')}</p>`;
     }
     
-    return `<p style="color: #1f2937; font-size: 14px; line-height: 1.5; margin-bottom: 4px; text-align: justify; margin: 0;">${line}</p>`;
+    return `<p style="color: #1f2937; font-size: 12px; line-height: 1.5; margin-bottom: 4px; text-align: justify; margin: 0;">${line.replace(/\[([^\]]+)\]/g, '<strong>$1</strong>')}</p>`;
   };
 
-  const page1Content = page1Lines.map(line => renderLineToHTML(line)).join('');
-  const page2Content = page2Lines.map(line => renderLineToHTML(line)).join('');
+  const page1Content = page1LinesWithObservations.map(line => renderLineToHTML(line)).join('');
+  const page2Content = page2LinesWithObservations.map(line => renderLineToHTML(line)).join('');
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -114,7 +128,7 @@ export function generatePDFHTML(documentData: DocumentData): string {
         }
         
         body {
-          font-family: 'Times New Roman', Times, serif;
+          font-family: 'Arial', sans-serif;
           margin: 0;
           padding: 0;
           background: white;
@@ -265,17 +279,17 @@ export function generatePDFHTML(documentData: DocumentData): string {
           <div class="header">
             <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 8px; position: relative; width: 100%;">
               <img src="http://localhost:3000/images/04.jpg" alt="Star Life Logo" style="height: 32px; width: auto; position: absolute; left: 0;" />
-              <h1 style="margin: 0; font-size: 20px; font-weight: bold; color: #8C6B75;">PROPOSTA COMERCIAL</h1>
+              <h1 style="margin: 0; font-size: 20px; font-weight: bold; color: #8C6B75;">PROPOSTA DE PARCERIA</h1>
             </div>
             <p style="font-size: 12px; color: #6b7280; margin: 0; text-align: center;">
-              Proposta Nº ${documentData.numeroProposta || 'PRCP-2024-0047'} - ${formatDate(documentData.dataProposta) || '06 de dezembro de 2024'}
+              Proposta Nº ${documentData.numeroProposta || 'PRCP-2024-0047'} - ${formatDate(documentData.dataProposta) || '06 de dezembro de 2024'}, válido por ${documentData.validadeProposta || '30 dias'}
             </p>
           </div>
 
           <!-- Título -->
           <div class="title-box">
             <h2 class="title-text">
-              ${documentData.tituloParceria || 'Proposta de Parceria – SINDIPOL'}
+              Sr: ${documentData.nomeResponsavel || '[Nome do Responsável]'}, ${documentData.cargoResponsavel || '[Cargo do Responsável]'} – ${documentData.tituloParceria || 'SINDIPOL'}
             </h2>
           </div>
 
