@@ -3,20 +3,15 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Download, Eye, EyeOff, Menu, X } from 'lucide-react';
-import { pdf } from '@react-pdf/renderer';
 import Sidebar from './Sidebar';
 import Preview from './Preview';
 import PreviewCard from './PreviewCard';
-import PDFDocument from './PDFDocument';
-import TemplateGallery from './TemplateGallery';
 import { DocumentData } from '@/types/document';
-import { ProposalTemplate } from '@/types/templates';
 
 const DocumentEditor = () => {
   const [showPreview, setShowPreview] = useState(true);
   const [showSidebar, setShowSidebar] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('sindipol-original');
 
   // Estado do documento com valores padrão
   const [documentData, setDocumentData] = useState<DocumentData>({
@@ -34,10 +29,8 @@ const DocumentEditor = () => {
     dataProposta: new Date().toISOString().split('T')[0],
     validadeProposta: '30 dias',
     
-    // Valores
-    valorTotal: 0,
-    condicoesPagamento: '',
-    prazoExecucao: '',
+    // Percentual de Comissionamento
+    percentualComissionamento: 10,
     
     // Observações
     observacoes: '',
@@ -50,28 +43,43 @@ const DocumentEditor = () => {
     }));
   };
 
-  const handleSelectTemplate = (template: ProposalTemplate) => {
-    setSelectedTemplateId(template.id);
-    // Atualiza o título da parceria com base no template
-    setDocumentData(prev => ({
-      ...prev,
-      tituloParceria: template.content.split('\n')[0] // Primeira linha do template
-    }));
-  };
 
   const handleGeneratePDF = async () => {
     setIsGenerating(true);
     try {
-      // Gerar o PDF
-      const blob = await pdf(<PDFDocument data={documentData} selectedTemplateId={selectedTemplateId} />).toBlob();
+      // Gerar novo número da proposta
+      const novoNumero = `PROP-${new Date().getFullYear()}-${String(Date.now()).slice(-4)}`;
+      const dataComNovoNumero = {
+        ...documentData,
+        numeroProposta: novoNumero
+      };
       
-      // Criar URL temporária
+      setDocumentData(prev => ({
+        ...prev,
+        numeroProposta: novoNumero
+      }));
+      
+      // Gerar PDF usando a nova API
+      const response = await fetch('/api/generate-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataComNovoNumero),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao gerar PDF');
+      }
+
+      // Criar blob do PDF
+      const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       
       // Criar link de download
       const link = document.createElement('a');
       link.href = url;
-      link.download = `Proposta_${documentData.numeroProposta || 'documento'}_${new Date().getTime()}.pdf`;
+      link.download = `Proposta_${novoNumero}_${new Date().getTime()}.pdf`;
       
       // Simular clique para download
       document.body.appendChild(link);
@@ -147,10 +155,16 @@ const DocumentEditor = () => {
         <aside className="hidden lg:block lg:w-96 bg-gray-900 border-r border-green-500/20 overflow-y-auto">
           <div className="p-6">
             {/* Template Gallery */}
-            <TemplateGallery 
-              onSelectTemplate={handleSelectTemplate}
-              selectedTemplateId={selectedTemplateId}
-            />
+            {/* Editor de Documento */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+                <FileText className="w-5 h-5 mr-2 text-green-400" />
+                Editor de Documento
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Preencha os campos abaixo para personalizar sua proposta de parceria.
+              </p>
+            </div>
 
             {/* Sidebar Fields */}
             <Sidebar 
@@ -164,10 +178,16 @@ const DocumentEditor = () => {
         <div className="lg:hidden flex-1 overflow-y-auto bg-gray-900">
           <div className="p-4 space-y-4">
             {/* Template Gallery */}
-            <TemplateGallery 
-              onSelectTemplate={handleSelectTemplate}
-              selectedTemplateId={selectedTemplateId}
-            />
+            {/* Editor de Documento */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+                <FileText className="w-5 h-5 mr-2 text-green-400" />
+                Editor de Documento
+              </h3>
+              <p className="text-gray-300 text-sm">
+                Preencha os campos abaixo para personalizar sua proposta de parceria.
+              </p>
+            </div>
 
             {/* Sidebar Fields */}
             <Sidebar 
@@ -178,14 +198,13 @@ const DocumentEditor = () => {
             {/* Preview Card Recolhível - APENAS MOBILE */}
             <PreviewCard 
               documentData={documentData} 
-              selectedTemplateId={selectedTemplateId}
             />
           </div>
         </div>
 
         {/* Desktop: Preview Area */}
         <main className="hidden lg:block flex-1 bg-gray-100 overflow-y-auto">
-          <Preview documentData={documentData} selectedTemplateId={selectedTemplateId} />
+          <Preview documentData={documentData} />
         </main>
       </div>
     </div>

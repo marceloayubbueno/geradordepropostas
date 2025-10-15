@@ -8,7 +8,7 @@ import {
   User, 
   FileText, 
   Briefcase, 
-  DollarSign, 
+  Percent, 
   MessageSquare,
   Building2
 } from 'lucide-react';
@@ -52,9 +52,9 @@ const Sidebar = ({ documentData, onFieldChange }: SidebarProps) => {
       color: 'from-purple-500 to-pink-500'
     },
     { 
-      id: 'valores', 
-      title: '4º - Valores e Prazos', 
-      icon: DollarSign,
+      id: 'comissionamento', 
+      title: '4º - Percentual de Comissionamento', 
+      icon: Percent,
       color: 'from-yellow-500 to-amber-500'
     },
     { 

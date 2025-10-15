@@ -27,7 +27,7 @@ Nosso compromisso é oferecer orientação clara, confiança e cuidado verdadeir
 Construir uma relação de cooperação e benefícios mútuos entre a Associação e nossa consultoria, trazendo vantagens exclusivas para os associados e fortalecendo os eventos promovidos pela entidade.
 
 3. Benefícios para a Associação
-• Comissionamento de 10% sobre a primeira mensalidade paga de cada plano fechado por associados ou indicação da Associação.
+• Comissionamento de {percentualComissionamento}% sobre a primeira mensalidade paga de cada plano fechado por associados ou indicação da Associação.
 • Esse valor poderá ser revertido em:
 o Caixinha de patrocínio para o evento de final de ano.
 o Desconto para associados na contratação dos planos.

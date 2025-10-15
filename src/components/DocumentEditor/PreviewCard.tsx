@@ -8,10 +8,9 @@ import Preview from './Preview';
 
 interface PreviewCardProps {
   documentData: DocumentData;
-  selectedTemplateId?: string;
 }
 
-const PreviewCard = ({ documentData, selectedTemplateId }: PreviewCardProps) => {
+const PreviewCard = ({ documentData }: PreviewCardProps) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
@@ -52,7 +51,7 @@ const PreviewCard = ({ documentData, selectedTemplateId }: PreviewCardProps) => 
             className="overflow-hidden"
           >
             <div className="bg-gray-800 rounded-lg p-2">
-              <Preview documentData={documentData} selectedTemplateId={selectedTemplateId} />
+              <Preview documentData={documentData} />
             </div>
           </motion.div>
         )}

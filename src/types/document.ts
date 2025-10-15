@@ -15,10 +15,8 @@ export interface DocumentData {
   dataProposta: string;
   validadeProposta: string;
   
-  // Valores e Prazos
-  valorTotal: number;
-  condicoesPagamento: string;
-  prazoExecucao: string;
+  // Percentual de Comissionamento
+  percentualComissionamento: number;
   
   // Observações
   observacoes: string;
@@ -31,7 +29,7 @@ export interface FieldConfig {
   placeholder?: string;
   required?: boolean;
   editable: boolean; // Campo editável ou fixo
-  category: 'corretor' | 'parceria' | 'proposta' | 'valores' | 'observacoes';
+  category: 'corretor' | 'parceria' | 'proposta' | 'comissionamento' | 'observacoes';
 }
 
 export const documentFields: FieldConfig[] = [
@@ -45,14 +43,12 @@ export const documentFields: FieldConfig[] = [
   { name: 'tituloParceria', label: 'Título da Parceria', type: 'text', editable: true, category: 'parceria', required: true },
   
   // 3º CARD - Dados da Proposta
-  { name: 'numeroProposta', label: 'Número da Proposta', type: 'text', editable: true, category: 'proposta', required: true },
+  { name: 'numeroProposta', label: 'Número da Proposta', type: 'text', editable: false, category: 'proposta', required: true },
   { name: 'dataProposta', label: 'Data da Proposta', type: 'date', editable: true, category: 'proposta', required: true },
   { name: 'validadeProposta', label: 'Validade', type: 'text', editable: true, category: 'proposta', placeholder: 'Ex: 30 dias' },
   
-  // 4º CARD - Valores e Prazos
-  { name: 'valorTotal', label: 'Valor Total', type: 'currency', editable: true, category: 'valores' },
-  { name: 'condicoesPagamento', label: 'Condições de Pagamento', type: 'textarea', editable: true, category: 'valores' },
-  { name: 'prazoExecucao', label: 'Prazo de Execução', type: 'text', editable: true, category: 'valores', placeholder: 'Ex: 60 dias' },
+  // 4º CARD - Percentual de Comissionamento
+  { name: 'percentualComissionamento', label: 'Percentual de Comissionamento', type: 'number', editable: true, category: 'comissionamento', placeholder: '10' },
   
   // 5º CARD - Observações
   { name: 'observacoes', label: 'Observações Adicionais', type: 'textarea', editable: true, category: 'observacoes' },

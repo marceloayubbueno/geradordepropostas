@@ -5,11 +5,10 @@ import { motion } from 'framer-motion';
 
 interface PreviewProps {
   documentData: DocumentData;
-  selectedTemplateId?: string;
 }
 
-const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
-  const fixedProposalText = getProposalText(selectedTemplateId);
+const Preview = ({ documentData }: PreviewProps) => {
+  const fixedProposalText = getProposalText();
   
   // Substituir o nome do corretor no texto
   const processedText = fixedProposalText.replace(
@@ -24,6 +23,9 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
   ).replace(
     /@ramos_k/g,
     documentData.instagramCorretor || '[@usuario]'
+  ).replace(
+    /{percentualComissionamento}/g,
+    documentData.percentualComissionamento?.toString() || '10'
   );
   
   const formatDate = (dateString: string) => {
@@ -56,8 +58,25 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
     // Títulos numerados
     if (line.match(/^\d+\.\s+/)) {
       return (
-        <h3 key={index} className="font-bold mt-4 mb-2 text-base" style={{ color: '#60C0C0' }}>
-          {line}
+        <h3 
+          key={index} 
+          className="font-bold mt-4 mb-2 text-base" 
+          style={{ 
+            color: '#60C0C0',
+            textShadow: '0 1px 2px rgba(0,0,0,0.1)',
+            position: 'relative'
+          }}
+        >
+          <span 
+            style={{
+              background: 'linear-gradient(90deg, rgba(96, 192, 192, 0.1) 0%, transparent 100%)',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              display: 'inline-block'
+            }}
+          >
+            {line}
+          </span>
         </h3>
       );
     }
@@ -66,7 +85,13 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
     if (line.startsWith('•')) {
       return (
         <div key={index} className="ml-4 mb-1 flex items-start">
-          <span className="font-bold mr-2 text-sm" style={{ color: '#8C6B75' }}>•</span>
+          <div 
+            className="w-2 h-2 mr-3 mt-2 rounded-full flex-shrink-0"
+            style={{ 
+              backgroundColor: '#8C6B75',
+              boxShadow: '0 2px 4px rgba(140, 107, 117, 0.3)'
+            }}
+          />
           <p className="text-gray-800 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
             {line.substring(2)}
           </p>
@@ -114,8 +139,11 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm] relative"
-          style={{ 
+          className="bg-white shadow-2xl flex-shrink-0 w-full lg:w-[210mm] relative"
+          style={{
+            border: '1px solid #e5e7eb',
+            borderRadius: '8px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05)',
             height: '297mm',
             fontFamily: '"Times New Roman", Times, serif',
             overflow: 'hidden'
@@ -141,10 +169,27 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
               filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
             }}
           />
-          <div className="h-full flex flex-col relative z-10" style={{ padding: '20mm' }}>
+          <div 
+            className="h-full flex flex-col relative z-10" 
+            style={{ 
+              padding: '20mm',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(248,250,252,0.4) 100%)',
+              borderRadius: '6px',
+              border: '1px solid rgba(229, 231, 235, 0.5)'
+            }}
+          >
             
             {/* Header */}
-            <div className="border-b-2 border-gray-300 pb-3 mb-4">
+            <div 
+              className="pb-3 mb-4"
+              style={{
+                background: 'linear-gradient(135deg, rgba(140, 107, 117, 0.05) 0%, rgba(96, 192, 192, 0.05) 100%)',
+                borderBottom: '2px solid #8C6B75',
+                borderRadius: '6px 6px 0 0',
+                padding: '16px 20px',
+                margin: '-20px -20px 16px -20px'
+              }}
+            >
               <div className="flex items-center justify-center mb-2 relative">
                 <img 
                   src="/images/04.jpg" 
@@ -161,8 +206,19 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
             </div>
 
             {/* Título */}
-            <div className="p-3 mb-4 text-center" style={{ backgroundColor: '#8C6B75' }}>
-              <h2 className="text-sm font-bold text-white">
+            <div 
+              className="p-3 mb-4 text-center rounded-lg"
+              style={{ 
+                background: 'linear-gradient(135deg, #8C6B75 0%, #60C0C0 100%)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+              }}
+            >
+              <h2 
+                className="text-sm font-bold text-white"
+                style={{
+                  textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                }}
+              >
                 {documentData.tituloParceria || 'Proposta de Parceria – SINDIPOL'}
               </h2>
             </div>
@@ -180,8 +236,11 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white shadow-xl flex-shrink-0 w-full lg:w-[210mm] relative"
-          style={{ 
+          className="bg-white shadow-2xl flex-shrink-0 w-full lg:w-[210mm] relative"
+          style={{
+            border: '1px solid #e5e7eb',
+            borderRadius: '8px',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.05)',
             height: '297mm',
             fontFamily: '"Times New Roman", Times, serif',
             overflow: 'hidden'
@@ -207,7 +266,15 @@ const Preview = ({ documentData, selectedTemplateId }: PreviewProps) => {
               filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
             }}
           />
-          <div className="h-full flex flex-col relative z-10" style={{ padding: '20mm' }}>
+          <div 
+            className="h-full flex flex-col relative z-10" 
+            style={{ 
+              padding: '20mm',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(248,250,252,0.4) 100%)',
+              borderRadius: '6px',
+              border: '1px solid rgba(229, 231, 235, 0.5)'
+            }}
+          >
             
             {/* Conteúdo Página 2 */}
             <div className="flex-1 space-y-2 text-sm">
