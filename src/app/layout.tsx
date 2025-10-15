@@ -3,9 +3,9 @@ import './globals.css'
 import PixelAndConsentProvider from '../components/PixelAndConsentProvider';
 
 export const metadata: Metadata = {
-  title: 'Uixweb - Desenvolvimento Web e Automações | Sites, Sistemas Web, Automações N8N e E-commerce',
-  description: 'Desenvolvemos sites profissionais, sistemas web personalizados, automações inteligentes com N8N e e-commerce completos. Soluções digitais modernas e otimizadas para impulsionar seu negócio.',
-  keywords: 'desenvolvimento web, automações, sites profissionais, sistemas web, N8N, e-commerce, sites responsivos, React, Next.js, automação de processos, agência web',
+  title: 'Gerador de Propostas - Crie Propostas Profissionais em PDF',
+  description: 'Gerador de propostas profissionais em PDF para corretores de saúde. Crie documentos personalizados com marca d\'água, logos e formatação profissional. Sistema completo para propostas de parceria.',
+  keywords: 'gerador de propostas, PDF profissional, corretores de saúde, propostas comerciais, documentos personalizados, gerador de PDF, propostas de parceria, Star Life',
 }
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
         <div className="min-h-screen bg-white">
           {children}
         </div>
-        <PixelAndConsentProvider />
+        {/* <PixelAndConsentProvider /> */}
       </body>
     </html>
   )
