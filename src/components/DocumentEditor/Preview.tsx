@@ -322,7 +322,7 @@ const Preview = ({ documentData }: PreviewProps) => {
                   <img src="/images/planos/mais-saude-logo.png" alt="Mais Saúde" className="h-12 w-auto object-contain" />
                 </div>
                 <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                  <img src="/images/planos/you-logo.png" alt="You" className="h-12 w-auto object-contain" />
+                  <img src="/images/planos/meridional-saude.png" alt="You" className="h-12 w-auto object-contain" />
                 </div>
               </div>
             </div>

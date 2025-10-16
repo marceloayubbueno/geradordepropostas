@@ -339,7 +339,7 @@ export function generatePDFHTML(documentData: DocumentData): string {
                 { nome: 'São Bernardo', img: 'sao-bernardo-logo.png' },
                 { nome: 'Best Senior', img: 'best-senior-logo.png' },
                 { nome: 'Mais Saúde', img: 'mais-saude-logo.png' },
-                { nome: 'You', img: 'you-logo.png' }
+                { nome: 'You', img: 'meridional-saude.png' }
               ].map(plano => `
                 <div class="plano-card">
                   <img src="${baseUrl}/images/planos/${plano.img}" alt="${plano.nome}" style="max-height: 48px; max-width: 100%; object-fit: contain;" />
