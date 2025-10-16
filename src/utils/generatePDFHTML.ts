@@ -327,11 +327,11 @@ export function generatePDFHTML(documentData: DocumentData): string {
           <!-- Planos que Oferecemos -->
           <div style="margin-top: 24px; margin-bottom: 16px;">
             <h3 style="font-weight: bold; margin-bottom: 12px; font-size: 14px; color: #60C0C0;">
-              Planos que Oferecemos:
+              Alguns Planos que Oferecemos:
             </h3>
             <div class="planos-grid">
               ${[
-                { nome: 'Amil', img: 'amil-logo.png' },
+                { nome: 'Amil', img: 'bluzz-saude.png' },
                 { nome: 'Unimed', img: 'unimed-logo.png' },
                 { nome: 'Bradesco Saúde', img: 'bradesco-saude-logo.png' },
                 { nome: 'Medsenior', img: 'medsenior.png' },

@@ -294,11 +294,11 @@ const Preview = ({ documentData }: PreviewProps) => {
             {/* Planos que Oferecemos */}
             <div className="mt-4 mb-6">
               <h3 className="font-bold mb-3 text-sm" style={{ color: '#60C0C0' }}>
-                Planos que Oferecemos:
+                Alguns Planos que Oferecemos:
               </h3>
               <div className="grid grid-cols-3 gap-8">
                 <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                  <img src="/images/planos/amil-logo.png" alt="Amil" className="h-12 w-auto object-contain" />
+                  <img src="/images/planos/bluzz-saude.png" alt="Amil" className="h-12 w-auto object-contain" />
                 </div>
                 <div className="flex justify-center p-3 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
                   <img src="/images/planos/unimed-logo.png" alt="Unimed" className="h-12 w-auto object-contain" />
